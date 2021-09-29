@@ -28,7 +28,7 @@ metadata:
   labels:
     app: rss
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: rss
@@ -40,13 +40,13 @@ spec:
     spec:
       containers:
         - name: rss
-          image: [remote-shuffle-service-server-image]
+          image: registry.cn-shanghai.aliyuncs.com/kyligence/spark-rss:0.0.9
           resources:
             requests:
-              memory: "10G"
+              memory: "6G"
               cpu: "1000m"
             limits:
-              memory: "12G"
+              memory: "8G"
               cpu: "1200m"
           env:
             - name: RSS_SERVER_ID
@@ -79,6 +79,9 @@ spec:
     - port: 8080
       targetPort: 8080
       name: healthcheck
+    - port: 9338
+      targetPort: 9338
+      name: connector
   clusterIP: None
   selector:
     app: rss
